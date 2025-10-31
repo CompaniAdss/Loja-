@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Pagamento</title>
+  <style>
+    body {margin:0; font-family:Arial; background:#0f1724; color:#e6eef6;}
+    header {position:fixed; top:0; width:100%; background:#0b1220; color:#fff; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.4);}
+    nav a {color:#06b6d4; margin:0 12px; text-decoration:none; font-weight:600;}
+    nav a:hover {text-decoration:underline;}
+    main {margin-top:90px; padding:20px; max-width:500px; margin-left:auto; margin-right:auto;}
+    form label {display:block; margin-bottom:10px;}
+    input {width:100%; padding:10px; border-radius:8px; border:none; margin-top:4px;}
+    button {background:linear-gradient(90deg,#06b6d4,#0ea5a2); border:none; padding:12px; width:100%; border-radius:8px; font-weight:700; cursor:pointer; margin-top:20px;}
+    button:hover {opacity:0.9;}
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Meu Site</h2>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="pagamento.html">Pagamento</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Pagamento</h1>
+    <form>
+      <label>Nome Completo: <input type="text" required></label>
+      <label>Email: <input type="email" required></label>
+      <label>Número do Cartão: <input type="text" required></label>
+      <label>Validade: <input type="month" required></label>
+      <label>CVV: <input type="number" required></label>
+      <button type="submit">Finalizar Pagamento</button>
+    </form>
+  </main>
+</body>
+</html>

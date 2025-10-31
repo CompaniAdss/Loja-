@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Catálogo</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1220;--accent:#06b6d4;--muted:#94a3b8;--glass:rgba(255,255,255,0.03)}
+    *{box-sizing:border-box}
+    body{font-family:Inter,system-ui,sans-serif;margin:0;background:linear-gradient(180deg,var(--bg),#071025);color:#e6eef6}
+    header{position:fixed;top:0;left:0;right:0;background:var(--card);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 4px 10px rgba(0,0,0,0.4);}
+    nav a{color:var(--accent);margin:0 12px;text-decoration:none;font-weight:600}
+    nav a:hover{text-decoration:underline}
+    main{margin-top:90px;padding:20px;max-width:1100px;margin-left:auto;margin-right:auto}
+    input,select{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:10px;color:inherit}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;margin-top:20px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));border-radius:14px;padding:12px;border:1px solid rgba(255,255,255,0.04);box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .thumb{height:150px;border-radius:10px;background:#081427;display:flex;align-items:center;justify-content:center;margin-bottom:10px;overflow:hidden}
+    .thumb img{width:100%;height:100%;object-fit:cover}
+    .title{font-weight:600;margin:6px 0}
+    .price{font-weight:700;color:var(--accent)}
+    .meta{font-size:13px;color:var(--muted);margin-bottom:8px}
+    .btn{display:inline-block;padding:8px 10px;border-radius:8px;background:linear-gradient(90deg,var(--accent),#0ea5a2);color:#042b2c;text-decoration:none;font-weight:600}
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6);z-index:999}
+    .modal.open{display:flex}
+    .panel{background:#071428;padding:18px;border-radius:12px;max-width:760px;width:96%;box-shadow:0 12px 40px rgba(0,0,0,0.6)}
+    .panel img{width:260px;height:200px;object-fit:cover;border-radius:8px}
+    .info{display:flex;gap:12px}
+    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted);margin-right:4px}
+    @media(max-width:600px){.panel img{display:none}}
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Meu Site</h2>
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="pagamento.html">Pagamento</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Catálogo</h1>
+    <div>
+      <input id="search" type="search" placeholder="Buscar produto..." />
+      <select id="category"><option value="all">Todas categorias</option></select>
+    </div>
+
+    <div id="grid" class="grid"></div>
+    <div id="empty" style="display:none;text-align:center;color:var(--muted);margin-top:20px;">Nenhum produto encontrado.</div>
+  </main>
+
+  <div id="modal" class="modal">
+    <div class="panel">
+      <button id="closeModal" style="float:right;background:none;border:none;color:var(--muted);font-weight:700">✕</button>
+      <div style="clear:both"></div>
+      <div class="info">
+        <img id="mImg" src="">
+        <div>
+          <h2 id="mTitle"></h2>
+          <div id="mDesc" style="color:var(--muted);margin-bottom:10px"></div>
+          <div id="mPrice" style="color:var(--accent);font-weight:700;font-size:18px"></div>
+          <div id="mTags"></div>
+          <a href="pagamento.html" class="btn" style="margin-top:12px;display:inline-block;">Comprar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {id:1,title:'Fone Gamer XPro',category:'Eletrônicos',price:249.90,desc:'Fone com microfone, bass reforçado e RGB',img:'https://images.unsplash.com/photo-1518441902116-9b6b0c7e5f5b?auto=format&fit=crop&w=800&q=60',tags:['headset','usb']},
+      {id:2,title:'Caderno A5 - 200 páginas',category:'Papelaria',price:14.50,desc:'Capa dura, miolo pautado',img:'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=800&q=60',tags:['papel','escola']},
+      {id:3,title:'Caneca térmica 350ml',category:'Cozinha',price:39.90,desc:'Mantém a bebida quente por horas',img:'https://images.unsplash.com/photo-1526045612212-70caf35c14df?auto=format&fit=crop&w=800&q=60',tags:['cozinha','café']},
+      {id:4,title:'Teclado Mecânico K84',category:'Eletrônicos',price:399.00,desc:'Switches azuis, iluminação por tecla',img:'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=60',tags:['teclado','mecânico']},
+      {id:5,title:'Mochila urbana 20L',category:'Bolsas',price:159.90,desc:'Resistente à água, porta USB',img:'https://images.unsplash.com/photo-1520975911734-60b8f9f4e0f0?auto=format&fit=crop&w=800&q=60',tags:['viagem','externo']}
+    ];
+
+    const grid=document.getElementById('grid');
+    const search=document.getElementById('search');
+    const category=document.getElementById('category');
+    const cats=Array.from(new Set(products.map(p=>p.category))).sort();
+    cats.forEach(c=>{const o=document.createElement('option');o.value=c;o.textContent=c;category.appendChild(o)});
+    function render(list){
+      grid.innerHTML='';
+      if(list.length===0){document.getElementById('empty').style.display='block';return}
+      document.getElementById('empty').style.display='none';
+      list.forEach(p=>{
+        const card=document.createElement('div');
+        card.className='card';
+        card.innerHTML=`
+          <div class='thumb'><img src='${p.img}' alt='${p.title}'></div>
+          <div class='title'>${p.title}</div>
+          <div class='meta'>${p.category} • ${p.tags.join(', ')}</div>
+          <div class='price'>R$ ${p.price.toFixed(2).replace('.',',')}</div>
+          <a href='#' data-id='${p.id}' class='btn'>Ver</a>`;
+        grid.appendChild(card);
+      });
+    }
+    function applyFilters(){
+      const q=search.value.trim().toLowerCase();
+      const cat=category.value;
+      let out=products.filter(p=>{
+        const t=(p.title+' '+p.desc+' '+p.tags.join(' ')).toLowerCase();
+        if(q&&!t.includes(q))return false;
+        if(cat!=='all'&&p.category!==cat)return false;
+        return true;
+      });
+      render(out);
+    }
+    [search,category].forEach(el=>el.addEventListener('input',applyFilters));
+    render(products);
+
+    const modal=document.getElementById('modal');
+    const mImg=document.getElementById('mImg');
+    const mTitle=document.getElementById('mTitle');
+    const mDesc=document.getElementById('mDesc');
+    const mPrice=document.getElementById('mPrice');
+    const mTags=document.getElementById('mTags');
+    document.addEventListener('click',e=>{
+      const btn=e.target.closest('[data-id]');
+      if(!btn)return;
+      e.preventDefault();
+      const p=products.find(x=>x.id==btn.dataset.id);
+      mImg.src=p.img;
+      mTitle.textContent=p.title;
+      mDesc.textContent=p.desc;
+      mPrice.textContent='R$ '+p.price.toFixed(2).replace('.',',');
+      mTags.innerHTML=p.tags.map(t=>`<span class='tag'>${t}</span>`).join('');
+      modal.classList.add('open');
+    });
+    document.getElementById('closeModal').onclick=()=>modal.classList.remove('open');
+    modal.onclick=e=>{if(e.target===modal)modal.classList.remove('open');};
+  </script>
+</body>
+</html>
