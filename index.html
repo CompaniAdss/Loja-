@@ -4,14 +4,24 @@
   <meta charset="utf-8">
   <title>Meu Site - Início</title>
   <style>
-    body {margin:0; font-family:Arial; background:#0f1724; color:#e6eef6;}
-    header {position:fixed; top:0; width:100%; background:#0b1220; color:#fff; padding:12px 20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 4px 10px rgba(0,0,0,0.4);}
-    nav a {color:#06b6d4; margin:0 12px; text-decoration:none; font-weight:600;}
+    body {margin:0; font-family:Arial; background:#f4f4f4;}
+    header {position:fixed; top:0; width:100%; background:#111; color:#fff; padding:10px 20px; display:flex; justify-content:space-between; align-items:center;}
+    nav a {color:#fff; margin:0 10px; text-decoration:none;}
     nav a:hover {text-decoration:underline;}
-    main {margin-top:80px; padding:30px; text-align:center;}
-    h1 {color:#06b6d4;}
-    p {max-width:600px; margin:20px auto; line-height:1.5;}
-    a.btn {display:inline-block; margin-top:20px; background:linear-gradient(90deg,#06b6d4,#0ea5a2); color:#042b2c; padding:10px 20px; border-radius:8px; font-weight:700; text-decoration:none;}
+    main {margin-top:70px; padding:20px; text-align:center;}
+    a.github-link {
+      display:inline-block;
+      margin-top:20px;
+      background:#111;
+      color:#fff;
+      padding:10px 20px;
+      text-decoration:none;
+      border-radius:6px;
+      transition:background 0.3s;
+    }
+    a.github-link:hover {
+      background:#333;
+    }
   </style>
 </head>
 <body>
@@ -26,8 +36,13 @@
 
   <main>
     <h1>Bem-vindo</h1>
-    <p>Explore o catálogo e encontre o produto ideal. Nosso sistema é simples, rápido e direto. Clique abaixo para começar.</p>
-    <a class="btn" href="catalogo.html">Ir para o Catálogo</a>
+    <p>Esta é a introdução do seu site. Aqui você apresenta o que faz e guia o visitante.</p>
+
+    <a href="https://github.com/CompaniAdss/App.git" 
+       class="github-link" 
+       target="_blank">
+       Ver projeto no GitHub
+    </a>
   </main>
 </body>
 </html>
